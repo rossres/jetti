@@ -9,11 +9,13 @@ For changes to the hosted Jetti server (the React app, snippet runtime, owner mo
 ### Added
 - `.github/assets/social-preview.png` — temporary 1280×640 brand-kit social card (replaced when designer ships final).
 - Latest-release badge in README pointing at the GitHub releases page.
+- README sections: "What it looks like in 60 seconds" (timed walkthrough), "Two review modes" (Quick text vs Full site), "What reviewers can do / can't do", "Compared to Loom / Figma comments / GitHub issues" (positioning table), "FAQ" (8 questions), "The install contract" (three-surface explanation), "Roadmap" (pre-1.0 + beyond), "Community" (Discussions, Issues, Security, customer + dev landing).
 
 ### Changed
 - README badge row trimmed from 6 → 5: dropped redundant `web · jetti.co` and static `Status: pre-1.0` badges; added a live GitHub release badge.
 - README "Quickstart — without an agent" `curl` block collapsed into a `<details>` summary so the agent prompt remains the single visual focus above the fold.
 - Framework support matrix rows linked to their tracking issues ([#3](https://github.com/rossres/jetti/issues/3) Next.js, [#4](https://github.com/rossres/jetti/issues/4) Webflow, [#5](https://github.com/rossres/jetti/issues/5) Shopify).
+- "Privacy and boundaries" now points at `SECURITY.md` for the full stop-and-ask conditions list.
 
 ## [0.4.0] - 2026-05-08
 
