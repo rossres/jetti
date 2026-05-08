@@ -16,11 +16,10 @@
 
 <p align="center">
   <a href="https://rossres.github.io/jetti/"><img alt="For devs" src="https://img.shields.io/badge/for%20devs-rossres.github.io%2Fjetti-fbbf24"></a>
+  <a href="https://github.com/rossres/jetti/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/rossres/jetti?color=d97757&label=release"></a>
   <a href="https://github.com/rossres/jetti/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/rossres/jetti/actions/workflows/ci.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
-  <a href="https://jetti.co"><img alt="jetti.co" src="https://img.shields.io/badge/web-jetti.co-9a3412"></a>
   <img alt="Made for Claude Code · Codex · Cursor" src="https://img.shields.io/badge/made%20for-Claude%20Code%20%C2%B7%20Codex%20%C2%B7%20Cursor-1c1917">
-  <img alt="Status: pre-1.0" src="https://img.shields.io/badge/status-pre--1.0-fbbf24">
 </p>
 
 <pre align="center">
@@ -54,7 +53,8 @@ apply jetti from <handoff-url>
 
 Your agent stages the changes on a branch and (if `gh` is available) opens a draft PR.
 
-## Quickstart — without an agent
+<details>
+<summary><strong>Quickstart — without an agent</strong> (manual <code>curl</code> path)</summary>
 
 If you'd rather drive it yourself:
 
@@ -75,6 +75,8 @@ npx jetti apply <handoff-url>
 ```
 
 A standalone `npx @jetti/install` is on the roadmap; today the install runs through your agent or the API.
+
+</details>
 
 ## The two CLIs
 
@@ -110,13 +112,12 @@ The full install contract is published at [`jetti.co/install.md`](https://jetti.
 |---|---|---|
 | Plain HTML / static | ✅ | Patches `index.html` `<head>` |
 | Vite + React | ✅ | Patches `index.html` |
-| Next.js (app router) | 🔜 | Roadmap — patch `app/layout.tsx` |
-| Next.js (pages router) | 🔜 | Roadmap — patch `pages/_document.tsx` |
-| Webflow / custom code | 🔜 | Manual snippet paste works today |
-| Shopify themes | 🔜 | Manual snippet paste works today |
+| Next.js (app + pages router) | 🔜 [#3](https://github.com/rossres/jetti/issues/3) | Manual snippet paste works today |
+| Webflow / custom code | 🔜 [#4](https://github.com/rossres/jetti/issues/4) | Manual snippet paste works today |
+| Shopify themes | 🔜 [#5](https://github.com/rossres/jetti/issues/5) | Manual snippet paste works today |
 | GTM | 🔜 | Manual snippet paste works today |
 
-A framework adapter is one of the highest-leverage contributions. See [CONTRIBUTING.md](./CONTRIBUTING.md).
+A framework adapter is one of the highest-leverage contributions today — pick up [a pinned issue](https://github.com/rossres/jetti/issues?q=is%3Aopen+is%3Aissue+label%3Aframework-adapter) and see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Privacy and boundaries
 
