@@ -39,13 +39,16 @@ you ▸ ~/your-repo $ install jetti
 
 - [What Jetti does](#what-jetti-does)
 - [Quickstart — with an AI agent](#quickstart--with-an-ai-agent)
-- [Quickstart — without an agent](#quickstart--without-an-agent)
-- [Why Jetti](#why-jetti)
+- [What it looks like in 60 seconds](#what-it-looks-like-in-60-seconds)
+- [Two review modes](#two-review-modes)
+- [What reviewers can do](#what-reviewers-can-do)
 - [Use cases](#use-cases)
+- [Compared to Loom / Figma comments / GitHub issues](#compared-to-loom--figma-comments--github-issues)
 - [The two CLIs](#the-two-clis)
 - [How it works](#how-it-works)
 - [Framework support](#framework-support)
 - [Examples](#examples)
+- [The install contract](#the-install-contract)
 - [Architecture](#architecture)
 - [Privacy and boundaries](#privacy-and-boundaries)
 - [FAQ](#faq)
@@ -92,7 +95,8 @@ apply jetti from <handoff-url>
 
 Your agent stages the reviewer's changes on a fresh branch and (if `gh` is available) opens a draft PR.
 
-## Quickstart — without an agent
+<details>
+<summary><strong>Quickstart — without an agent</strong> (manual <code>curl</code> path)</summary>
 
 If you'd rather drive it yourself:
 
@@ -114,18 +118,62 @@ npx jetti apply <handoff-url>
 
 For framework-specific instructions (Next.js, Webflow, Shopify, GTM), see [`docs/install-recipes.md`](./docs/install-recipes.md).
 
-## Why Jetti
+A standalone `npx @jetti/cli install` is on the roadmap; today the install runs through your agent or the API.
 
-The dev-to-stakeholder review loop is broken in three different ways. Jetti's design choices come from picking specific fights with each:
+</details>
 
-| Tool category | What it gets right | Where it falls down | What Jetti does instead |
-|---|---|---|---|
-| Loom / Tella videos | Stakeholder voice + emotion | Devs have to *re-translate* the feedback into edits | Stakeholder edits the words/photos directly; dev gets the actual change |
-| BugHerd / Marker.io | Pin comments to elements | Comments aren't edits; still a translation step | Inline editing with photo swap; comments are secondary |
-| Figma comments | Live collaboration | Lives in design land, not code; reviewer needs an account | Lives on the actual site; reviewer needs zero accounts |
-| Screenshot + Slack | Fast | No structure; no provenance; gets lost | Structured handoff bundle, replayable, attached to a session |
+## What it looks like in 60 seconds
 
-Jetti is **not** a generic feedback tool with AI sprinkled on. The agent loop — install via agent, apply via agent — is the product.
+A real session looks like this:
+
+```
+0:00  Dev (in Claude Code) ▸ install jetti from https://jetti.co/install.md
+0:15  Agent fetches /install.md, mints a session, patches index.html
+0:18  Agent prints reviewer link: jetti.co/#/r/rev_abc123
+0:20  Dev pastes link in Slack: "@megan, take a pass at the homepage copy"
+
+—— meanwhile ——
+
+0:00  Megan opens the link, accepts the consent banner
+0:05  Megan sees the live site with Jetti chrome at the top
+0:30  Megan clicks any visible text → inline editor → types the change
+1:30  Megan replaces a hero photo by dropping a file onto the <img>
+2:00  Megan pins a comment on the pricing card
+3:00  Megan clicks "Send to developer"
+
+—— back in Claude Code ——
+
+3:30  Dev ▸ apply jetti from <handoff-url-from-megan>
+3:45  Agent stages changes on a branch, opens a draft PR, prints the diff
+4:00  Dev reviews and merges
+```
+
+No screen recording. No "the third paragraph, second sentence, change 'we' to 'you'" translation. The diff is what the reviewer typed.
+
+## Two review modes
+
+Jetti ships with two paths, picked automatically by the reviewability gate:
+
+- **Quick text review** — for public, mostly-static pages (marketing sites, docs, landing pages). No install. Jetti loads the page server-side; the reviewer edits in a Jetti-hosted shell.
+- **Full site review** — for SPAs, dynamic pages, staging sites, or anything that needs photo replacement. Requires the snippet (one `<script>` tag) and is removable in seconds.
+
+The reviewer doesn't see the mode — they just open the link. Mode selection happens behind the scenes based on what your site supports.
+
+## What reviewers can do
+
+Without an account, reviewers can:
+
+- **Edit visible text** — click any rendered string, type the change, press enter
+- **Replace photos** — upload a new file for any `<img>` (drag-drop or click-to-pick)
+- **Leave comments** — pin notes to specific elements
+- **Ask Vibe Assist** for a copy rewrite — three free uses per session
+- **Send the review** to the developer when they're done
+
+What reviewers can't do:
+
+- Edit hidden, server-rendered, or behind-auth content the page doesn't already render
+- Inspect or modify scripts, data, or anything not visible on the page
+- Re-publish, share, or export the original site's content
 
 ## Use cases
 
@@ -153,6 +201,18 @@ Marketing wants to swap five product photos for the launch. Your devs would othe
 - Send marketing a Jetti reviewer link
 - They drag-drop the new photos onto the site in the live preview
 - The handoff bundle includes the new image files + their target placements; your agent applies them
+
+## Compared to Loom / Figma comments / GitHub issues
+
+|  | Loom | Figma comments | GitHub issues | **Jetti** |
+|---|:---:|:---:|:---:|:---:|
+| Reviewer needs an account | no | yes | yes | **no** |
+| Reviewer edits the live site | no | no | no | **yes** |
+| Output is structured for devs | no | partial | partial | **yes (diff)** |
+| Works on the actual production HTML | yes (read) | no (mockup) | yes (read) | **yes (edit)** |
+| Agent can apply the changes | no | no | no | **yes** |
+
+If your reviewer talks in Looms, you spend 20 minutes translating "the third paragraph, second sentence, change 'we' to 'you'" into a diff. Jetti makes the diff *be* the review.
 
 ## The two CLIs
 
@@ -188,14 +248,13 @@ For the deep system overview — endpoints, snippet runtime, capture format, han
 |---|---|---|
 | Plain HTML / static | ✅ | Patches `index.html` `<head>` |
 | Vite + React | ✅ | Patches `index.html` |
-| Next.js (app router) | 🔜 | Roadmap — see [issue tracker](https://github.com/rossres/jetti/issues?q=is%3Aissue+label%3Aframework-adapter) |
-| Next.js (pages router) | 🔜 | Roadmap |
-| Astro | 🔜 | Roadmap |
-| Webflow / custom code | 🔜 | Manual snippet paste works today — see [`docs/install-recipes.md`](./docs/install-recipes.md) |
-| Shopify themes | 🔜 | Manual snippet paste — see recipes |
-| GTM | 🔜 | Manual snippet paste — see recipes |
+| Next.js (app + pages router) | 🔜 [#3](https://github.com/rossres/jetti/issues/3) | Manual snippet paste works today |
+| Astro | 🔜 [#9](https://github.com/rossres/jetti/issues/9) | Manual snippet paste works today |
+| Webflow / custom code | 🔜 [#4](https://github.com/rossres/jetti/issues/4) | Manual snippet paste works today |
+| Shopify themes | 🔜 [#5](https://github.com/rossres/jetti/issues/5) | Manual snippet paste works today |
+| GTM | 🔜 [#12](https://github.com/rossres/jetti/issues/12) | Manual snippet paste works today |
 
-A framework adapter is one of the highest-leverage contributions. See [CONTRIBUTING.md](./CONTRIBUTING.md) and the [`framework-adapter` issue label](https://github.com/rossres/jetti/issues?q=is%3Aissue+label%3Aframework-adapter).
+A framework adapter is one of the highest-leverage contributions today — pick up [a tagged issue](https://github.com/rossres/jetti/issues?q=is%3Aopen+is%3Aissue+label%3Aframework-adapter) and see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Examples
 
@@ -208,11 +267,23 @@ Each example has a README walking through the install flow on that stack.
 
 For framework-specific copy-paste recipes, see [`docs/install-recipes.md`](./docs/install-recipes.md).
 
+## The install contract
+
+`install jetti from https://jetti.co/install.md` works because of three public surfaces:
+
+1. **[`jetti.co/install.md`](https://jetti.co/install.md)** — agent-readable install instructions. Tells the agent which entry file to patch, the snippet shape, and how to verify.
+2. **[`jetti.co/.well-known/jetti-install.json`](https://jetti.co/.well-known/jetti-install.json)** — machine-readable manifest with the snippet `src`, supported framework adapters, and the install-session endpoint shape.
+3. **`POST jetti.co/api/agent-installs`** — mints a session, returns the snippet `<script>` tag (with a session-scoped token) and the reviewer URL.
+
+The CLI in [`scripts/jetti-install.mjs`](./scripts/jetti-install.mjs) is one consumer of that contract. Any agent that follows the contract can install Jetti — Claude Code, Codex, Cursor, a custom GitHub Action, your own script.
+
+This is the same pattern as `llms.txt` and `robots.txt`, but for install: **a stable URL + a manifest + a CLI is the agent's API**.
+
 ## Architecture
 
 The full system overview lives in [`docs/architecture.md`](./docs/architecture.md). Quick map:
 
-- **Install contract** — `jetti.co/install.md` (agent-readable Markdown), `jetti.co/.well-known/jetti-install.json` (machine-readable manifest), `POST jetti.co/api/agent-installs` (session minting endpoint).
+- **Install contract** — described above; the agent's API.
 - **Snippet runtime** — single-origin JS bundle served from `jetti.co/snippet.js`. Activates on the developer's site for the reviewer's session only.
 - **Reviewer experience** — in-browser inline editing for text and photos, plus Caveat-styled comment annotations.
 - **Handoff bundle** — signed, short-lived JSON bundle with structured edits (text patches, photo swaps, comments) the apply CLI consumes.
@@ -228,68 +299,78 @@ Jetti is built on a few hard rules:
 - **Reviewers are always free.** Plan limits affect developer-side features only.
 - **No telemetry on the install CLI** beyond the session mint call to `/api/agent-installs`.
 
-PRs that touch loading, proxying, capturing, recording, replaying, screenshotting, or exporting third-party site content will be reviewed against these boundaries.
+PRs that touch loading, proxying, capturing, recording, replaying, screenshotting, or exporting third-party site content will be reviewed against these boundaries. Stop-and-ask conditions for changes that could weaken them are documented in [SECURITY.md](./SECURITY.md).
 
 ## FAQ
 
 <details>
-<summary><strong>Does Jetti work with sites that need login?</strong></summary>
+<summary><strong>How is this different from Figma comments?</strong></summary>
 
-Reviewer-facing — yes. The reviewer opens the link in their own browser; Jetti loads on top of the site as the reviewer sees it. If the reviewer is authenticated, they see authenticated content. Jetti does not handle the authentication itself.
+Figma comments live on a mockup. Jetti edits live on the rendered site — what the reviewer sees is what's in production, including the typos that snuck in after the design was approved. Jetti's output is a diff your agent can apply; Figma's output is a thread your developer translates by hand.
 
-Install-side — Jetti patches files in your repo, so it works regardless of whether the *deployed* site requires login.
 </details>
 
 <details>
-<summary><strong>What does the reviewer see — a different version of my site?</strong></summary>
+<summary><strong>Does Jetti work on sites behind auth or paywalls?</strong></summary>
 
-No. The reviewer sees your real site. Jetti adds an inline editor chrome (a small bottom bar and edit affordances on hover) but does not clone or proxy the page. They're editing the actual rendered DOM in their browser; their edits are captured and sent back as a structured handoff.
+The snippet path works on whatever site you install it on, including authenticated apps — the reviewer hits the same auth flow you do. The proxy / quick-text path explicitly does not bypass logins, paywalls, anti-bot measures, or any other access control. See [SECURITY.md](./SECURITY.md) for the full list of stop-and-ask conditions.
+
 </details>
 
 <details>
-<summary><strong>How is this different from Loom or BugHerd?</strong></summary>
+<summary><strong>Does the snippet modify my site?</strong></summary>
 
-Loom captures the reviewer's voice describing changes; you still have to translate. BugHerd attaches comments to elements; comments are not edits. Jetti captures *the actual edits* — the new copy, the new photo — and hands them to your agent in a format it can apply.
+No. The snippet adds Jetti chrome and listens for reviewer edits when an active session is live. It does not modify the DOM otherwise, write to your storage, or call your APIs. Deleting the `<script data-jetti-session>` tag fully uninstalls it.
+
 </details>
 
 <details>
-<summary><strong>Can I self-host Jetti?</strong></summary>
+<summary><strong>What gets sent to Jetti's servers?</strong></summary>
 
-The install CLI in this repo is fully usable on its own — but it depends on a running Jetti server (the React app, snippet runtime, owner monitor, and apply CLI server endpoint). The hosted instance at `jetti.co` is what most users want. Self-hosting requires the internal app monorepo; reach out via [SECURITY.md](./SECURITY.md) contact for now.
+When a reviewer is editing: the text/photo/comment edits they make, the URL they're on, and a heartbeat for presence. When no session is active: nothing. The snippet does not record keystrokes, screenshots, network payloads, cookies, or content the reviewer doesn't intentionally edit. See [`/privacy`](https://jetti.co/privacy) and [`/ai-data`](https://jetti.co/ai-data) for the full data inventory.
+
 </details>
 
 <details>
-<summary><strong>What frameworks does the install CLI auto-detect?</strong></summary>
+<summary><strong>What does it cost?</strong></summary>
 
-Today: plain HTML / static and Vite + React (it patches `index.html`). Next.js (app router and pages router), Astro, Webflow, Shopify, and GTM are roadmap — see [`docs/install-recipes.md`](./docs/install-recipes.md) for manual instructions and the [`framework-adapter` issues](https://github.com/rossres/jetti/issues?q=is%3Aissue+label%3Aframework-adapter) to contribute.
+Reviewers are always free — they don't sign up, don't see plans, don't get rate-limited. Today, developers can run their first review for free; paid plans for repeat snippet-backed handoffs are coming. Current state and policy live at [jetti.co/pricing](https://jetti.co/pricing).
+
 </details>
 
 <details>
-<summary><strong>Is the reviewer's data sent to AI?</strong></summary>
+<summary><strong>Is what I send to "Vibe Assist" used to train models?</strong></summary>
 
-The reviewer's edits are stored as part of the handoff bundle so the developer's agent can apply them. They are not used to train Jetti's models, not shared with third-party AI services, and the bundle is short-lived (signed, expiring URL).
+No. Vibe Assist sends the selected text to Anthropic for the single rewrite request and is not retained or used for training. See [`/ai-data`](https://jetti.co/ai-data).
+
 </details>
 
 <details>
-<summary><strong>What if I don't use an AI agent?</strong></summary>
+<summary><strong>Can I self-host?</strong></summary>
 
-Use the manual quickstart above. Mint a session via curl, paste the snippet, share the link, run `npx jetti apply` when the handoff is ready. The agent path is the *intended* one; the manual path always works.
+Not yet. The hosted server (snippet runtime, owner monitor, apply CLI source) lives in a separate app monorepo. Self-host is a long-term goal but not a v1 promise. If you have a specific need, [open a Discussion](https://github.com/rossres/jetti/discussions).
+
 </details>
 
 <details>
-<summary><strong>How do I uninstall Jetti?</strong></summary>
+<summary><strong>What happens if I uninstall mid-review?</strong></summary>
 
-Delete the `<script data-jetti-session=...>` tag from your `<head>`. That's it. The reviewer link stops working; no client-side state remains on visitors' browsers.
+The reviewer's link stops working, but the edits they've already submitted are preserved in the handoff bundle. You can `apply jetti` from any handoff URL whether or not the snippet is currently installed.
+
 </details>
 
 ## Roadmap
 
-The full roadmap with milestones lives in [ROADMAP.md](./ROADMAP.md). High-level priorities:
+Pre-1.0, ordered by leverage:
 
-- **Framework adapters** — Next.js (both routers), Astro, then Webflow / Shopify / GTM helpers.
-- **`npx @jetti/cli` package** — publish the install CLI as a standalone npm package.
-- **Verification handshake** — post-install, the CLI waits for a real snippet heartbeat and reports verified state.
-- **Self-host docs** — clearer path for teams who want to run their own Jetti server.
+1. **Framework auto-detect** for Next.js ([#3](https://github.com/rossres/jetti/issues/3)), Astro ([#9](https://github.com/rossres/jetti/issues/9)), Webflow ([#4](https://github.com/rossres/jetti/issues/4)), Shopify ([#5](https://github.com/rossres/jetti/issues/5)), and GTM ([#12](https://github.com/rossres/jetti/issues/12)). The contract supports any framework — the install CLI just needs to recognize and patch them.
+2. **Standalone `npx @jetti/cli` package** ([#13](https://github.com/rossres/jetti/issues/13)) — so the install path doesn't depend on cloning this repo.
+3. **Post-install verification handshake** ([#14](https://github.com/rossres/jetti/issues/14)) — confirm the snippet actually loaded before declaring success.
+4. **Snippet reliability matrix** — published proof of text/photo/comment capture across SPA, SSR, CSP, and ad-blocker conditions.
+
+Beyond v1: self-hostable server, custom branding for agencies, bigger reviewer toolkit (suggested rewrites, per-element comments), org-level audit log.
+
+Full plan with milestones in [ROADMAP.md](./ROADMAP.md). Anything you'd add? [Open a Discussion](https://github.com/rossres/jetti/discussions).
 
 ## Repository layout
 
@@ -309,6 +390,7 @@ jetti/
 │   ├── workflows/ci.yml          ← node --check + required-files
 │   ├── ISSUE_TEMPLATE/           ← bug, feature, framework adapter
 │   ├── PULL_REQUEST_TEMPLATE.md
+│   ├── assets/social-preview.png ← temporary brand-kit social card
 │   └── dependabot.yml
 ├── docs/
 │   ├── index.html                ← dev landing page (GitHub Pages)
@@ -339,6 +421,8 @@ For security issues, see [SECURITY.md](./SECURITY.md).
 - ✨ **Feature ideas** → discussions first, then [feature request](https://github.com/rossres/jetti/issues/new?template=feature_request.yml)
 - 🔒 **Security** → email per [SECURITY.md](./SECURITY.md)
 - 🤝 **Code of conduct** → [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
+- 🌐 **Customer site** → [jetti.co](https://jetti.co)
+- 📘 **Dev landing** → [rossres.github.io/jetti](https://rossres.github.io/jetti/)
 
 For more support resources, see [SUPPORT.md](./SUPPORT.md).
 

@@ -8,32 +8,31 @@ For changes to the hosted Jetti server (the React app, snippet runtime, owner mo
 
 ### Added
 
-- Initial public Jetti repo carved out from the internal app monorepo.
-- **Expanded README** with: Table of contents, "What Jetti does," Why Jetti (vs Loom/BugHerd/Figma/Marker), three concrete use cases, FAQ, Roadmap link, Repository layout map, Community + Support, Acknowledgments, and a [star history embed](https://star-history.com/#rossres/jetti).
-- **`ROADMAP.md`** — milestone-tracked framework adapter plan, "Next" / "Later" / "Out of scope" sections.
-- **`CODE_OF_CONDUCT.md`** — Contributor Covenant 2.1.
-- **`SUPPORT.md`** — quick guide for where to ask, by question type.
-- **`AGENTS.md`** — explicit instructions for AI agents working on this repo (what's safe to change, what's not, hard rules, honesty constraints).
-- **`package.json`** — npm package metadata; sets up future `@jetti/cli` publish with `bin: jetti-install`.
-- **`docs/architecture.md`** — full system overview: install contract, snippet runtime, handoff bundle, apply CLI. ASCII flow diagram, endpoint reference, schema versioning notes.
-- **`docs/install-recipes.md`** — copy-paste install instructions for Vite/React, plain HTML, Next.js (app router + pages router), Astro, Webflow, Shopify themes, GTM, Hugo/Jekyll/11ty.
-- **`examples/vite-react/`** — working `index.html` showing the patched snippet location, plus a README walking through the install flow on Vite.
-- **`examples/plain-html/`** — minimal static page with the snippet installed and brand-aligned styling; serveable via `python3 -m http.server`.
-- `docs/index.html` — developer landing page served via GitHub Pages at [`rossres.github.io/jetti/`](https://rossres.github.io/jetti/).
-- `scripts/jetti-install.mjs` — install CLI source.
-- `LICENSE` (MIT), `CONTRIBUTING.md`, `SECURITY.md`.
-- `.github/` scaffolding: CI syntax check + required-files job, dependabot, issue templates, PR template.
+- **Depth-pass README sections** merged from a parallel session: "What it looks like in 60 seconds" (timed walkthrough), "Two review modes" (Quick text vs Full site), "What reviewers can do / can't do," "Compared to Loom / Figma comments / GitHub issues" (yes/no positioning table), expanded FAQ (8 product-grounded questions), and "The install contract" (three-surface explanation).
+- README badge row trimmed: dropped redundant `web · jetti.co` and static `Status: pre-1.0` badges; added a live GitHub release badge linked to `/releases/latest` so the v0.4 mark in the hero ASCII is backed by a real release.
+- Manual-quickstart `curl` block collapsed into `<details>` so the agent prompt remains the single visual focus above the fold.
+- Framework support matrix rows linked to their tracking issues (#3 Next.js, #4 Webflow, #5 Shopify, #9 Astro, #12 GTM).
 
 ### Fixed
 
 - README hero used to reference `.github/assets/hero-light.png` and `demo-install.gif` which don't exist yet — replaced with canonical JETTI ASCII banner and `┌─ status ─┐` panel until designer assets ship.
 
-### Changed
+## [0.4.0] - 2026-05-08
 
-- README badge row 6 → 5: dropped redundant `web · jetti.co` and static `Status: pre-1.0` badges; added a live GitHub release badge linked to `/releases/latest` so the v0.4 mark in the hero ASCII is backed by an actual release.
+First public Jetti release. Tracks the install skill version baked into `scripts/jetti-install.mjs` and matches the **v0.4 · skill** badge in the README.
 
-### Added (visual assets)
+### Added
 
+- Initial public Jetti repo carved out from the internal app monorepo.
+- **Substantive build-out** to make the repo feel like a real OSS project (per the BMAD-METHOD reference): `ROADMAP.md`, `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1), `SUPPORT.md`, `AGENTS.md` (instructions for AI agents working on this repo), `package.json` (ready to publish as `@jetti/cli`), `docs/architecture.md` (full system overview with ASCII flow diagram and v1 schema example), `docs/install-recipes.md` (copy-paste instructions for Vite/React, plain HTML, Next.js both routers, Astro, Webflow, Shopify, GTM, Hugo/Jekyll/11ty), `examples/vite-react/`, `examples/plain-html/`.
+- README with: Table of contents, "What Jetti does," agent + manual quickstarts, "Why Jetti" comparison, three concrete use cases (agency / founder / photo swaps), framework support matrix, privacy boundaries, repository layout map, contributing pointer, acknowledgments (BMAD / Bun / react.email), [star history embed](https://star-history.com/#rossres/jetti).
+- `docs/index.html` — developer landing page served via GitHub Pages at [`rossres.github.io/jetti/`](https://rossres.github.io/jetti/). Carved out from the internal monorepo and rewired with `rossres/jetti` URLs.
+- `scripts/jetti-install.mjs` — install CLI source.
+- `LICENSE` (MIT), `CONTRIBUTING.md`, `SECURITY.md`.
+- `.github/` scaffolding: CI syntax check + required-files job, dependabot, issue templates (with `framework-adapter` label), PR template.
 - `.github/assets/social-preview.png` — temporary 1280×640 brand-kit social card (cream `#FDF9F0`, copper `#D97757` jetti wordmark with sticker shadow, honey `#FBBF24` accent squiggle, mono terminal panel with the install command, MIT · v0.4 · skill footer). Replaces the generic GitHub auto-OG when uploaded via Settings → Social preview. Designer's polished version replaces this later.
+- 7 seed issues filed (3 framework adapters from a parallel session: #3 Next.js, #4 Webflow, #5 Shopify; 4 from this session: #9 Astro, #12 GTM, #13 publish `@jetti/cli`, #14 verification handshake).
+- GitHub Discussions enabled.
 
-[Unreleased]: https://github.com/rossres/jetti/commits/main
+[Unreleased]: https://github.com/rossres/jetti/compare/v0.4.0...main
+[0.4.0]: https://github.com/rossres/jetti/releases/tag/v0.4.0
