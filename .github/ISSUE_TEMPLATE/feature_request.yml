@@ -1,0 +1,57 @@
+name: Feature request
+description: Suggest something Jetti should do.
+title: "[feat] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing: small ideas, "maybe one day" thoughts, and "is this the right approach?" discussions are a better fit for [Discussions](https://github.com/rossres/jetti/discussions). Use this template when you have a concrete proposal.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the user (developer, reviewer, owner) and the situation. Avoid jumping to a solution.
+      placeholder: "When I install Jetti in a Next.js app router project, the CLI doesn't know where to put the snippet, so I have to do it manually."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: One paragraph. What would the smallest version of this look like?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Which surface would change?
+      multiple: true
+      options:
+        - Install flow (`scripts/jetti-install.mjs`, `/install.md`, `/api/agent-installs`)
+        - Snippet runtime
+        - Owner monitor
+        - Reviewer experience
+        - `jetti apply` CLI
+        - Pricing / billing
+        - Docs / website
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you think about, and why did you reject it?
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Are you up for sending a PR?
+      options:
+        - label: Yes, I'd like to try implementing this.
+        - label: No, I'm filing the idea for someone else.

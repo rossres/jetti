@@ -1,0 +1,77 @@
+name: Bug report
+description: Something broke. Help us reproduce it.
+title: "[bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. The more reproducible the bug, the faster we can fix it.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A short description of the bug, including what you expected to happen.
+      placeholder: "When I ran `install jetti from https://jetti.co/install.md` in Claude Code, the snippet was injected twice."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: A minimal sequence of steps. Include the exact agent prompt, repo type, or curl command.
+      placeholder: |
+        1. Fresh `npm create vite@latest my-app -- --template react-ts`
+        2. In Claude Code: `install jetti from https://jetti.co/install.md`
+        3. Open `index.html` — observe two `<script data-jetti-session>` tags
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Which surface is affected?
+      multiple: true
+      options:
+        - Install flow (snippet injection / agent install)
+        - Snippet runtime (in-browser reviewer experience)
+        - Owner monitor / dashboard
+        - Reviewer experience
+        - `jetti apply` CLI
+        - Server / API
+        - Docs / install contract (`/install.md`, manifest)
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      description: Output of `git rev-parse HEAD` if running locally, or the date/time if reproduced against `jetti.co`.
+      placeholder: "main @ abc1234"
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Node version, OS, browser (for reviewer-side bugs), agent (Claude Code / Codex / Cursor).
+      placeholder: "Node 20.11, macOS 14.5, Chrome 124, Claude Code 0.4"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      description: Paste console output, server logs, or screenshots. Wrap logs in triple backticks.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I searched existing issues and didn't find a duplicate.
+          required: true
+        - label: This isn't a security vulnerability (those go to SECURITY.md, not here).
+          required: true

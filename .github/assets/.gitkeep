@@ -1,0 +1,9 @@
+# Drop visual assets here.
+#
+# Expected files (designer brief: docs/jetti-landing-and-github-designer-brief-2026-05-07.md):
+#   hero-light.png        — main banner, GitHub light theme
+#   hero-dark.png         — main banner, GitHub dark theme
+#   demo-install.gif      — `install jetti` CLI flow, ~5–8s loop
+#   demo-reviewer.gif     — reviewer editing a live site, ~5–8s loop
+#   demo-apply.gif        — `npx jetti apply` running, ~5–8s loop
+#   social-preview.png    — 1280×640 PNG used as the GitHub repo's social card

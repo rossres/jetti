@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Jetti for devs &amp; vibe coders — website reviews for agent workflows</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --cream:#fdf9f0; --cream-2:#fef3c7; --paper:#fffdf6;
+  --copper:#d97757; --copper-deep:#b45a3c;
+  --ink:#1c1917; --stone:#57534e; --stone-2:#78716c; --line:#d6d3d1;
+  --honey:#fbbf24; --moss:#15803d; --leaf:#bbf7d0; --rust:#9a3412; --sky:#fed7aa;
+  --display:'Fraunces',Georgia,serif;
+  --body:'Inter',system-ui,sans-serif;
+  --hand:'Caveat',cursive;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--cream);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img,svg{display:block}
+
+/* ─── paper texture ─────────────────────────────────────────── */
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(217,119,87,.05) 0, transparent 40%),
+    radial-gradient(circle at 88% 82%, rgba(21,128,61,.05) 0, transparent 40%);
+}
+
+/* ─── topbar ────────────────────────────────────────────────── */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background:var(--ink); color:var(--cream-2);
+  padding:12px 28px; display:flex; align-items:center; gap:18px;
+  border-bottom:3px solid var(--copper);
+}
+.brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:900; font-size:22px; letter-spacing:-.02em}
+.brand .dot{color:var(--copper)}
+.brand .fox{font-family:var(--mono); color:var(--copper); font-size:13px; font-weight:600; opacity:.85}
+.nav{display:flex; gap:4px; margin-left:18px}
+.nav a{color:#a8a29e; font-size:13px; font-weight:600; text-decoration:none; padding:6px 12px; border-radius:8px; transition:color .12s}
+.nav a:hover{color:var(--cream-2)}
+.nav-spacer{flex:1}
+.nav-r{display:flex; align-items:center; gap:10px}
+.nav-r .gh{color:#a8a29e; font-size:12px; font-family:var(--mono); display:flex; align-items:center; gap:6px; text-decoration:none}
+.nav-r .gh:hover{color:var(--cream-2)}
+.nav-r .pill{font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; background:#292524; border:1px solid #44403c; color:var(--cream-2); padding:5px 12px; border-radius:999px}
+.nav-r .install-cta{font-size:13px; font-weight:700; background:var(--copper); color:#fff; padding:8px 14px; border-radius:10px; border:1.5px solid var(--ink); box-shadow:2px 2px 0 var(--ink); text-decoration:none}
+.nav-r .install-cta:hover{transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--ink)}
+
+/* ─── shell ─────────────────────────────────────────────────── */
+.wrap{max-width:1240px; margin:0 auto; padding:0 32px; position:relative; z-index:1}
+section{padding:88px 0; position:relative}
+section + section{border-top:1.5px dashed var(--line)}
+
+/* ─── HERO ──────────────────────────────────────────────────── */
+.hero{padding:48px 0 64px; position:relative; overflow:hidden; min-height:calc(100vh - 60px); display:flex; align-items:center}
+.hero-inner{max-width:880px; margin:0 auto; text-align:center; position:relative; width:100%}
+.hero .banner{display:inline-block; margin:0 auto 32px; padding:14px 28px; background:#0c0a09; border:2.5px solid var(--ink); border-radius:14px; box-shadow:6px 6px 0 var(--ink); font-family:var(--mono); font-size:10.5px; line-height:1.35; white-space:pre; text-align:left; color:#fb923c}
+.hero .banner .white{color:#fafaf9; font-weight:700}
+.hero .banner .dim{color:#78716c}
+.hero .banner .gold{color:#fbbf24}
+.hero h1{font-family:var(--display); font-weight:900; font-size:76px; line-height:.95; letter-spacing:-.035em; margin:0 auto 22px; color:var(--ink); max-width:880px}
+.hero h1 em{font-style:italic; color:var(--copper-deep); position:relative; display:inline-block; padding-right:.05em}
+.hero h1 em::after{
+  content:""; position:absolute; left:0; right:0; bottom:-8px; height:10px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14'><path d='M2 8 Q 30 2 60 8 T 120 8 T 180 8 T 238 8' stroke='%23d97757' stroke-width='3.2' fill='none' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat; background-size:100% 100%;
+}
+.hero .lede{font-size:19px; line-height:1.5; color:var(--stone); max-width:620px; margin:0 auto 28px}
+.hero-buttons{display:flex; justify-content:center; gap:14px; margin-top:24px; flex-wrap:wrap}
+.hero-buttons .btn{font-size:14px; font-weight:700; padding:11px 18px; border-radius:11px; border:1.5px solid var(--ink); text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:transform .12s ease, box-shadow .12s ease}
+.hero-buttons .btn.primary{background:var(--ink); color:var(--cream-2); box-shadow:3px 3px 0 var(--copper)}
+.hero-buttons .btn.primary:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--copper)}
+.hero-buttons .btn.secondary{background:#fff; color:var(--ink); box-shadow:3px 3px 0 var(--ink)}
+.hero-buttons .btn.secondary:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink)}
+.hero .paste-label{font-size:13px; color:var(--stone-2); margin-top:14px; font-weight:500}
+.hero .paste-label b{color:var(--ink); font-weight:700}
+.prompt{margin:0 auto}
+.hero .lede b{color:var(--ink); font-weight:700}
+
+/* primary CTA — the agent prompt itself */
+.prompt{
+  background:var(--ink); color:#e7e5e4; border-radius:14px;
+  border:2.5px solid var(--ink); box-shadow:6px 6px 0 var(--ink);
+  font-family:var(--mono); position:relative; overflow:hidden;
+  max-width:620px;
+}
+.prompt-bar{
+  background:#0c0a09; padding:9px 14px; display:flex; align-items:center; gap:8px;
+  border-bottom:1px solid #292524;
+}
+.prompt-bar .d{width:11px; height:11px; border-radius:50%}
+.prompt-bar .d.r{background:#ef4444}.prompt-bar .d.y{background:#fbbf24}.prompt-bar .d.g{background:#15803d}
+.prompt-bar .label{font-size:11px; color:#a8a29e; margin-left:8px}
+.prompt-bar .label b{color:#fef3c7; font-weight:600}
+.prompt-body{padding:18px 20px 16px}
+.prompt-line{display:flex; align-items:flex-start; gap:10px; font-size:14.5px}
+.prompt-line .arrow{color:var(--copper); font-weight:700}
+.prompt-line .you{color:#86efac}
+.prompt-line .path{color:#67e8f9; font-size:12.5px}
+.prompt-line .cmd{color:#fef3c7; font-weight:500}
+.prompt-line .cmd .verb{color:#fbbf24; font-weight:700}
+.prompt-line .cmd .url{color:#fb923c; text-decoration:underline; text-decoration-color:#7c2d12; text-underline-offset:3px}
+.prompt-cta-row{display:flex; align-items:center; gap:10px; padding:12px 14px; background:#0c0a09; border-top:1px solid #292524}
+.prompt-cta-row .copy{
+  flex:1; display:flex; align-items:center; gap:8px; justify-content:center;
+  font-family:var(--body); font-size:13px; font-weight:700;
+  background:var(--copper); color:#fff; border:none; border-radius:8px;
+  padding:9px 14px; cursor:pointer; letter-spacing:.01em;
+}
+.prompt-cta-row .copy:hover{background:#c46442}
+.prompt-cta-row .hint{font-size:11px; color:#a8a29e; font-family:var(--body); white-space:nowrap}
+.prompt-cta-row .hint b{color:#e7e5e4; font-weight:600}
+
+.hero-secondary{display:flex; flex-wrap:wrap; align-items:center; gap:16px 24px; margin-top:22px; font-size:14px; color:var(--stone)}
+.hero-secondary a.see-flow{color:var(--ink); font-weight:700; text-decoration:none; border-bottom:2px solid var(--copper); padding-bottom:1px}
+.hero-secondary a.see-flow:hover{color:var(--copper-deep)}
+.trust{display:flex; align-items:center; gap:8px; font-size:13px; color:var(--stone-2)}
+.trust .check{display:inline-flex; width:18px; height:18px; align-items:center; justify-content:center; border-radius:50%; background:var(--leaf); border:1.5px solid var(--moss); color:var(--moss); font-weight:800; font-size:11px}
+
+/* hero illustration column (mascot scene) */
+.hero-art{position:relative; min-height:520px; display:flex; align-items:center; justify-content:center}
+.hero-art .scene{position:relative; width:100%; max-width:520px}
+.hero-art .scene .floating{
+  position:absolute; background:#fff; border:2px solid var(--ink); border-radius:12px;
+  padding:8px 12px; font-size:12px; font-weight:600; box-shadow:3px 3px 0 var(--ink);
+  display:flex; align-items:center; gap:8px;
+}
+.hero-art .scene .floating.f1{top:-2%; left:-6%; transform:rotate(-3deg); animation:bobble 4.2s ease-in-out infinite}
+.hero-art .scene .floating.f2{top:14%; right:-4%; transform:rotate(2.5deg); animation:bobble 5.1s ease-in-out infinite reverse}
+.hero-art .scene .floating.f3{bottom:8%; left:-2%; transform:rotate(-1.5deg); animation:bobble 4.6s ease-in-out infinite}
+.hero-art .scene .floating .tag{font-family:var(--hand); color:var(--copper); font-size:16px; font-weight:700}
+.hero-art .scene .floating .ico{width:18px; height:18px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#fff; font-weight:800}
+@keyframes bobble{0%,100%{transform:translateY(0) rotate(var(--r,-2deg))} 50%{transform:translateY(-8px) rotate(var(--r,-2deg))}}
+
+/* ─── 30-SECOND PITCH ───────────────────────────────────────── */
+.section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:36px; flex-wrap:wrap}
+.section-head .left{max-width:680px}
+.section-head .kicker{font-family:var(--mono); font-size:12px; font-weight:600; color:var(--copper); letter-spacing:.14em; text-transform:uppercase; margin-bottom:10px}
+.section-head h2{font-family:var(--display); font-weight:900; font-size:54px; line-height:1; letter-spacing:-.025em; margin:0 0 12px; color:var(--ink)}
+.section-head h2 em{font-style:italic; color:var(--copper-deep)}
+.section-head p{font-size:17px; line-height:1.55; color:var(--stone); margin:0; max-width:540px}
+.section-head .right{font-family:var(--hand); font-size:22px; color:var(--copper); transform:rotate(-2deg); padding-bottom:6px}
+
+.pitch-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px}
+.pitch{
+  background:var(--paper); border:2.5px solid var(--ink); border-radius:18px;
+  box-shadow:6px 6px 0 var(--ink); padding:28px 26px 30px; position:relative; overflow:hidden;
+}
+.pitch::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:8px;
+}
+.pitch.p1::before{background:var(--copper)}
+.pitch.p2::before{background:var(--honey)}
+.pitch.p3::before{background:var(--moss)}
+.pitch .step{
+  font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--stone-2); margin-bottom:14px;
+}
+.pitch .step .num{
+  display:inline-flex; width:24px; height:24px; align-items:center; justify-content:center;
+  border-radius:50%; border:1.5px solid var(--ink); font-family:var(--display); font-size:13px;
+  margin-right:8px; vertical-align:middle;
+}
+.pitch.p1 .step .num{background:var(--copper); color:#fff}
+.pitch.p2 .step .num{background:var(--honey); color:var(--ink)}
+.pitch.p3 .step .num{background:var(--moss); color:#fff}
+.pitch h3{font-family:var(--display); font-weight:900; font-size:26px; line-height:1.05; letter-spacing:-.02em; margin:0 0 12px}
+.pitch p{font-size:14.5px; line-height:1.55; color:var(--stone); margin:0 0 16px}
+.pitch p code, .pitch .demo{font-family:var(--mono); background:var(--cream-2); border:1px solid var(--line); border-radius:6px; padding:2px 6px; font-size:12.5px; color:var(--rust); font-weight:600}
+.pitch .demo{display:inline-block; padding:8px 12px; font-size:13px}
+.pitch .ico{
+  width:48px; height:48px; border-radius:12px; border:2px solid var(--ink);
+  display:flex; align-items:center; justify-content:center; margin-bottom:18px; box-shadow:2.5px 2.5px 0 var(--ink);
+}
+.pitch.p1 .ico{background:var(--cream-2)}
+.pitch.p2 .ico{background:#fff}
+.pitch.p3 .ico{background:var(--leaf)}
+
+/* ─── LIVE INSTALL DEMO ────────────────────────────────────── */
+.demo-section{background:linear-gradient(180deg, transparent 0%, rgba(217,119,87,.04) 100%)}
+.term-frame{
+  background:#0c0a09; border:2.5px solid var(--ink); border-radius:14px; overflow:hidden;
+  box-shadow:8px 8px 0 var(--ink); max-width:980px; margin:0 auto;
+}
+.term-bar{background:#1c1917; padding:11px 16px; display:flex; align-items:center; gap:10px; border-bottom:1px solid #292524}
+.term-bar .d{width:11px; height:11px; border-radius:50%}
+.term-bar .d.r{background:#ef4444}.term-bar .d.y{background:#fbbf24}.term-bar .d.g{background:#15803d}
+.term-bar .title{margin-left:auto; color:#a8a29e; font-family:var(--mono); font-size:11.5px}
+.term-bar .title b{color:#fef3c7; font-weight:600}
+
+.term-prompt{padding:8px 28px 0; color:#78716c; font-family:var(--mono); font-size:12.5px; display:flex; align-items:center; gap:8px}
+.term-prompt .you{color:#86efac}
+.term-prompt .arrow{color:#fb923c}
+.term-prompt .path{color:#67e8f9}
+.term-prompt .dim{color:#a8a29e}
+
+.term-body{
+  padding:14px 28px 28px; font-family:var(--mono); font-size:13px; line-height:1.65;
+  white-space:pre; color:#e7e5e4; overflow-x:auto;
+}
+.term-body .copper{color:#fb923c}
+.term-body .gold{color:#fbbf24}
+.term-body .green{color:#86efac}
+.term-body .dim{color:#78716c}
+.term-body .white{color:#fafaf9; font-weight:600}
+.term-body .accent{color:#67e8f9}
+.caret{display:inline-block; background:#fbbf24; width:9px; height:15px; vertical-align:-2px; margin-left:2px; animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.term-caption{text-align:center; margin-top:26px; font-family:var(--hand); font-size:22px; color:var(--copper); transform:rotate(-1deg)}
+
+/* ─── REVIEWER FLOW ────────────────────────────────────────── */
+.flow-grid{display:grid; grid-template-columns:1fr 1fr; gap:32px}
+.frame{
+  background:#fff; border:2.5px solid var(--ink); border-radius:18px;
+  box-shadow:6px 6px 0 var(--ink); overflow:hidden;
+}
+.frame-head{
+  background:var(--cream-2); padding:10px 16px; display:flex; align-items:center; gap:10px;
+  border-bottom:2px solid var(--ink);
+}
+.frame-head .d{width:11px;height:11px;border-radius:50%; border:1.5px solid var(--ink)}
+.frame-head .d.r{background:#ef4444}.frame-head .d.y{background:#fbbf24}.frame-head .d.g{background:#22c55e}
+.frame-head .url{flex:1; background:#fff; border:1.5px solid var(--ink); border-radius:6px; padding:5px 10px; font-family:var(--mono); font-size:11.5px; color:var(--stone); display:flex; align-items:center; gap:6px}
+.frame-head .url .lock{color:var(--moss)}
+.frame-head .url .live{margin-left:auto; font-size:10px; font-weight:700; color:var(--copper); letter-spacing:.1em; text-transform:uppercase}
+.frame-cap{
+  display:flex; align-items:center; gap:8px; padding:10px 16px; background:#fffbe6;
+  border-bottom:2px dashed var(--ink); font-size:12px; font-weight:700; color:var(--ink);
+}
+.frame-cap .icon{
+  display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px;
+  border-radius:5px; background:var(--copper); color:#fff; font-size:10px; font-weight:800;
+  border:1.5px solid var(--ink);
+}
+.frame-cap .who{flex:1}
+.frame-cap .what{font-family:var(--hand); color:var(--copper-deep); font-size:15px; font-weight:700}
+.frame-body{padding:24px 26px 28px; min-height:320px; position:relative}
+
+/* Frame A — reviewer view */
+.review-site h4{font-family:var(--display); font-size:30px; font-weight:900; letter-spacing:-.02em; margin:0 0 12px; line-height:1.05; position:relative; display:inline-block}
+.review-site h4 .edited{
+  background:var(--cream-2); border:1.5px dashed var(--copper); padding:0 6px; border-radius:4px;
+  position:relative;
+}
+.review-site h4 .edited::before{
+  content:"editing"; position:absolute; top:-22px; left:0; font-family:var(--hand); font-size:13px; font-weight:700;
+  color:var(--copper); letter-spacing:.02em; transform:rotate(-2deg);
+}
+.review-site .body-line{font-size:14px; color:var(--stone); margin:0 0 14px; line-height:1.55}
+.photo-block{
+  position:relative; height:140px; border-radius:12px; overflow:hidden;
+  border:2px solid var(--ink); box-shadow:3px 3px 0 var(--ink);
+  background:linear-gradient(135deg,#fed7aa 0%,#fbbf24 50%,#86efac 100%);
+}
+.photo-block::after{
+  content:"swap photo"; position:absolute; inset:auto 8px 8px auto;
+  background:#fff; border:1.5px solid var(--ink); border-radius:6px; padding:4px 9px;
+  font-size:11px; font-weight:700; box-shadow:2px 2px 0 var(--ink); font-family:var(--body);
+}
+.photo-block .cam{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-size:28px; opacity:.55;
+}
+.comment-bubble{
+  position:absolute; bottom:18px; right:18px; max-width:230px;
+  background:#fef3c7; border:2px solid var(--ink); border-radius:14px 14px 14px 4px;
+  padding:10px 14px; box-shadow:4px 4px 0 var(--ink); transform:rotate(1.5deg);
+  font-family:var(--hand); color:var(--ink); font-size:17px; font-weight:700; line-height:1.25;
+}
+.comment-bubble .by{display:block; font-family:var(--body); font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--stone-2); margin-bottom:4px}
+
+/* Frame B — owner monitor */
+.monitor{padding-top:6px}
+.monitor .row{
+  display:grid; grid-template-columns:24px 1fr auto; gap:12px;
+  padding:10px 12px; border:1.5px solid var(--line); border-radius:10px; background:var(--cream); margin-bottom:8px;
+  align-items:center;
+}
+.monitor .row .tag{
+  width:24px; height:24px; border-radius:6px; display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:800; color:#fff; border:1.5px solid var(--ink);
+}
+.monitor .row .tag.text{background:var(--copper)}
+.monitor .row .tag.img{background:var(--moss)}
+.monitor .row .tag.cmt{background:var(--honey); color:var(--ink)}
+.monitor .row .body{font-size:13px; color:var(--ink); line-height:1.4}
+.monitor .row .body .selector{font-family:var(--mono); font-size:11px; color:var(--stone-2); display:block; margin-top:2px}
+.monitor .row .by{font-size:11px; color:var(--stone-2); white-space:nowrap}
+.monitor .applybar{
+  display:flex; align-items:center; gap:12px; margin-top:18px; padding:14px;
+  background:var(--ink); color:var(--cream-2); border-radius:10px;
+  font-family:var(--mono); font-size:13px;
+}
+.monitor .applybar .copper{color:var(--copper); font-weight:700}
+.monitor .applybar .green{color:#86efac}
+.monitor .applybar .btn{
+  margin-left:auto; background:var(--copper); color:#fff; padding:7px 14px; border-radius:8px;
+  font-family:var(--body); font-weight:700; font-size:12px; border:1.5px solid #fef3c7;
+}
+
+.flow-foot{
+  text-align:center; margin-top:28px; font-size:14px; color:var(--stone);
+}
+.flow-foot a{color:var(--copper-deep); font-weight:700; text-decoration:underline; text-decoration-color:var(--copper); text-underline-offset:3px}
+
+/* ─── FRAMEWORK MATRIX ─────────────────────────────────────── */
+.matrix-card{
+  background:var(--paper); border:2.5px solid var(--ink); border-radius:18px;
+  box-shadow:6px 6px 0 var(--ink); overflow:hidden; max-width:880px; margin:0 auto;
+}
+.matrix-row{
+  display:grid; grid-template-columns:48px 1fr 180px 130px; gap:18px;
+  padding:18px 24px; border-bottom:1.5px dashed var(--line); align-items:center;
+}
+.matrix-row:last-child{border-bottom:none}
+.matrix-row .ico{
+  width:38px; height:38px; border-radius:10px; border:2px solid var(--ink);
+  display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:900; font-size:14px; box-shadow:2px 2px 0 var(--ink);
+}
+.matrix-row .ico.vite{background:#fef3c7}
+.matrix-row .ico.html{background:#fed7aa}
+.matrix-row .ico.next{background:#f5f5f4}
+.matrix-row .ico.next2{background:#f5f5f4}
+.matrix-row .ico.web{background:#dbeafe}
+.matrix-row .name{font-family:var(--display); font-weight:900; font-size:18px; letter-spacing:-.01em; color:var(--ink)}
+.matrix-row .name small{display:block; font-family:var(--body); font-weight:500; font-size:12.5px; color:var(--stone); margin-top:2px; letter-spacing:0}
+.matrix-row .detect{font-family:var(--mono); font-size:12px; color:var(--stone-2)}
+.matrix-row .status{
+  font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  border:1.5px solid var(--ink); border-radius:999px; padding:5px 12px; text-align:center;
+}
+.matrix-row .status.ok{background:var(--leaf); color:var(--moss)}
+.matrix-row .status.soon{background:#fffbe6; color:var(--rust)}
+.matrix-honest{
+  text-align:center; max-width:540px; margin:24px auto 0;
+  font-family:var(--hand); font-size:20px; color:var(--copper-deep); transform:rotate(-1deg);
+}
+.matrix-honest::before{content:"↑ "; color:var(--copper)}
+
+/* ─── PRICING TEASER ───────────────────────────────────────── */
+.teaser{
+  background:linear-gradient(160deg,#fef3c7 0%,#fed7aa 100%);
+  border:2.5px solid var(--ink); border-radius:24px; box-shadow:8px 8px 0 var(--ink);
+  padding:48px 56px; display:grid; grid-template-columns:1.4fr auto; gap:32px; align-items:center;
+  max-width:1080px; margin:0 auto; position:relative; overflow:hidden;
+}
+.teaser::before{
+  content:""; position:absolute; top:-30px; right:-30px; width:160px; height:160px;
+  background-image:radial-gradient(circle, rgba(217,119,87,.18) 0, transparent 70%);
+}
+.teaser h3{font-family:var(--display); font-weight:900; font-size:42px; letter-spacing:-.025em; margin:0 0 12px; line-height:1.04; color:var(--ink)}
+.teaser p{font-size:16px; line-height:1.5; color:var(--ink); margin:0; max-width:520px}
+.teaser p b{color:var(--copper-deep)}
+.teaser .cta-col{display:flex; flex-direction:column; gap:10px; align-items:flex-end}
+.teaser .price-cta{
+  background:var(--ink); color:var(--cream-2); padding:14px 24px; border-radius:12px;
+  font-weight:700; font-size:15px; text-decoration:none; border:2px solid var(--ink);
+  box-shadow:4px 4px 0 var(--copper); display:flex; align-items:center; gap:8px; white-space:nowrap;
+}
+.teaser .price-cta:hover{transform:translate(-1px,-1px); box-shadow:5px 5px 0 var(--copper)}
+.teaser .reviewers-free{font-family:var(--hand); font-size:18px; color:var(--copper-deep); transform:rotate(-1.5deg)}
+
+/* ─── FOOTER ───────────────────────────────────────────────── */
+.foot{background:var(--ink); color:#a8a29e; padding:48px 32px 32px; margin-top:72px; position:relative; overflow:hidden}
+.foot-grid{max-width:1240px; margin:0 auto; display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr; gap:48px}
+.foot .brand-foot{font-family:var(--display); font-weight:900; font-size:28px; color:var(--cream-2); letter-spacing:-.02em; margin-bottom:8px}
+.foot .brand-foot .dot{color:var(--copper)}
+.foot .tagline{font-family:var(--mono); font-size:12px; color:var(--copper); margin-bottom:14px}
+.foot .blurb{font-size:13.5px; line-height:1.55; max-width:280px; color:#a8a29e; margin:0 0 16px}
+.foot h5{font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--cream-2); margin:0 0 14px}
+.foot ul{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:9px}
+.foot ul a{color:#a8a29e; text-decoration:none; font-size:13.5px; font-weight:500}
+.foot ul a:hover{color:var(--cream-2)}
+.foot-bottom{
+  max-width:1240px; margin:36px auto 0; padding-top:20px; border-top:1px solid #292524;
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+  font-family:var(--mono); font-size:11.5px; color:#78716c;
+}
+.foot-bottom .ascii{color:var(--copper); font-family:var(--mono); font-size:11.5px}
+.foot-mushroom{position:absolute; bottom:0; right:36px; opacity:.85}
+
+/* ─── responsive ───────────────────────────────────────────── */
+@media (max-width:1080px){
+  .hero h1{font-size:68px}
+  .hero-grid{grid-template-columns:1fr; gap:36px}
+  .hero-art{min-height:380px}
+  .pitch-grid{grid-template-columns:1fr}
+  .flow-grid{grid-template-columns:1fr}
+  .section-head h2{font-size:42px}
+  .teaser{grid-template-columns:1fr; padding:36px 32px}
+  .teaser .cta-col{align-items:flex-start}
+  .foot-grid{grid-template-columns:1fr 1fr; gap:28px}
+  .matrix-row{grid-template-columns:38px 1fr 110px; gap:14px; padding:14px 18px}
+  .matrix-row .detect{display:none}
+}
+@media (max-width:680px){
+  .topbar{padding:10px 16px; gap:8px}
+  .nav{display:none}
+  .nav-r .gh, .nav-r .pill{display:none}
+  .wrap{padding:0 18px}
+  section{padding:64px 0}
+  .hero{padding:40px 0 56px}
+  .hero h1{font-size:48px}
+  .hero .lede{font-size:17px}
+  .section-head h2{font-size:32px}
+  .term-body{font-size:11px; padding:12px 16px 22px}
+  .term-prompt{padding:8px 16px 0; font-size:11.5px}
+  .matrix-row{grid-template-columns:1fr auto; gap:10px}
+  .matrix-row .ico{display:none}
+  .foot-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ── topbar ─────────────────────────────────────────── -->
+<header class="topbar">
+  <div class="brand">jetti<span class="dot">.</span></div>
+  <span class="fox">( o.o )</span>
+  <nav class="nav">
+    <a href="#install">Install</a>
+    <a href="#flow">How it works</a>
+    <a href="#frameworks">Frameworks</a>
+    <a href="#pricing">Pricing</a>
+    <a href="https://jetti.co">Docs</a>
+  </nav>
+  <div class="nav-spacer"></div>
+  <div class="nav-r">
+    <a class="gh" href="https://github.com/rossres/jetti"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.78.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5z"/></svg> github.com/rossres/jetti</a>
+    <a class="install-cta" href="#install">install jetti →</a>
+  </div>
+</header>
+
+<!-- ── hero ───────────────────────────────────────────── -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+      <pre class="banner"><span class="copper">  ╔══════════════════════════════════════════════════════╗
+  ║       ██╗ ███████╗ ████████╗ ████████╗ ██╗           ║
+  ║       ██║ ██╔════╝ ╚══██╔══╝ ╚══██╔══╝ ██║           ║
+  ║       ██║ █████╗      ██║       ██║    ██║           ║
+  ║  ██   ██║ ██╔══╝      ██║       ██║    ██║           ║
+  ║  ╚█████╔╝ ███████╗    ██║       ██║    ██║           ║
+  ║   ╚════╝  ╚══════╝    ╚═╝       ╚═╝    ╚═╝           ║
+  ║              </span><span class="white">J  E  T  T  I</span><span class="copper">     </span><span class="dim">v0.4 · skill</span><span class="copper">      ║
+  ║      </span><span class="gold">website reviews for agent workflows</span><span class="copper">             ║
+  ║                                </span><span class="copper">/'^^^\  .</span><span class="copper">              ║
+  ║                               </span><span class="copper">( o.o ) /</span><span class="copper">              ║
+  ╚══════════════════════════════════════════════════════╝</span></pre>
+        <h1>Website reviews for <em>agent workflows</em>.</h1>
+        <p class="lede">Tell your AI agent to <b>install jetti</b>. Send the link to your client. Get back changes your agent can apply.</p>
+
+        <!-- primary CTA: the prompt itself -->
+        <div class="prompt" id="install">
+          <div class="prompt-bar">
+            <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+            <span class="label"><b>claude-code</b> · paste this prompt</span>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-line">
+              <span class="arrow">▸</span>
+              <span class="cmd"><span class="verb">install jetti</span> from <span class="url">https://jetti.co/install.md</span></span>
+            </div>
+          </div>
+          <div class="prompt-cta-row">
+            <button class="copy" id="copy-prompt" aria-label="Copy install prompt">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span id="copy-label">Copy prompt</span>
+            </button>
+            <span class="hint">Works in <b>Claude Code</b>, <b>Codex</b>, <b>Cursor</b></span>
+          </div>
+        </div>
+
+        <div class="paste-label">Paste into <b>Claude Code</b>, <b>Codex</b>, or <b>Cursor</b>.</div>
+
+        <div class="hero-buttons">
+          <a class="btn primary" href="https://github.com/rossres/jetti"><span aria-hidden="true">★</span> Star on GitHub</a>
+          <a class="btn secondary" href="#install-demo"><span aria-hidden="true">⌘</span> See it run</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 30-second pitch ────────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="left">
+        <div class="kicker">─── thirty-second tour ───</div>
+        <h2>The whole loop, in <em>three steps</em>.</h2>
+        <p>One command in your agent. One link to your reviewer. One handoff back to your codebase.</p>
+      </div>
+      <div class="right">no shortcuts skipped ↘</div>
+    </div>
+
+    <div class="pitch-grid">
+      <div class="pitch p1">
+        <div class="step"><span class="num">1</span> install</div>
+        <div class="ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        </div>
+        <h3>Install in your agent.</h3>
+        <p><code>install jetti</code> is a real prompt your AI dev tool understands. We publish a public install contract; your agent reads it and patches your project.</p>
+        <div class="demo">▸ install jetti<span style="color:var(--stone-2)">_</span></div>
+      </div>
+      <div class="pitch p2">
+        <div class="step"><span class="num">2</span> review</div>
+        <div class="ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        </div>
+        <h3>Reviewers edit live.</h3>
+        <p>Your client opens a link and edits the words and photos they mean — on the actual site, in their browser. No comments to translate. No screenshots to interpret.</p>
+        <div class="demo" style="background:#fff; color:var(--ink)">click → type → done</div>
+      </div>
+      <div class="pitch p3">
+        <div class="step"><span class="num">3</span> apply</div>
+        <div class="ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
+        </div>
+        <h3>Hand back to your agent.</h3>
+        <p><code>npx jetti apply</code> stages the changes on a branch and opens a draft PR. Deterministic patches for text. Photo files saved to disk. Comments left for you to read.</p>
+        <div class="demo">↗ draft PR · 4 files</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── live install demo ─────────────────────────────── -->
+<section class="demo-section" id="install-demo">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="left">
+        <div class="kicker">─── what your agent runs ───</div>
+        <h2>The install, <em>start to finish</em>.</h2>
+        <p>This is the actual output of <code style="font-family:var(--mono); font-size:14px; background:var(--cream-2); padding:2px 6px; border-radius:5px">scripts/jetti-install.mjs</code>. No marketing demo — your agent runs this exact flow.</p>
+      </div>
+    </div>
+
+    <div class="term-frame">
+      <div class="term-bar">
+        <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+        <span class="title"><b>jetti</b> — claude-code · ~/your-repo</span>
+      </div>
+      <div class="term-prompt">
+        <span class="you">you</span>
+        <span class="arrow">▸</span>
+        <span class="path">~/your-repo</span>
+        <span class="dim">$ install jetti</span>
+      </div>
+<pre class="term-body"><span class="copper">    ╔══════════════════════════════════════════════════════╗
+    ║                                                      ║
+    ║       ██╗ ███████╗ ████████╗ ████████╗ ██╗           ║
+    ║       ██║ ██╔════╝ ╚══██╔══╝ ╚══██╔══╝ ██║           ║
+    ║       ██║ █████╗      ██║       ██║    ██║           ║
+    ║  ██   ██║ ██╔══╝      ██║       ██║    ██║           ║
+    ║  ╚█████╔╝ ███████╗    ██║       ██║    ██║           ║
+    ║   ╚════╝  ╚══════╝    ╚═╝       ╚═╝    ╚═╝           ║
+    ║                                                      ║
+    ║              </span><span class="white">J  E  T  T  I</span><span class="copper">     </span><span class="dim">v0.4 · skill</span><span class="copper">      ║
+    ║      website reviews for agent workflows             ║
+    ║                                </span><span class="copper">/'^^^\  .</span><span class="copper">              ║
+    ║                               </span><span class="copper">( o.o ) /</span><span class="copper">              ║
+    ║                                                      ║
+    ╚══════════════════════════════════════════════════════╝</span>
+
+
+  <span class="gold">▌</span> <span class="white">What jetti will do</span>
+    <span class="gold">1.</span>  <span class="green">✓</span>  Detect your framework            <span class="dim">(vite+react)</span>
+    <span class="gold">2.</span>  <span class="green">✓</span>  Patch <span class="accent">index.html</span> with the snippet
+    <span class="gold">3.</span>  <span class="green">✓</span>  Generate a unique reviewer link
+    <span class="gold">4.</span>  <span class="green">✓</span>  Verify with a build run
+    <span class="gold">5.</span>  <span class="green">✓</span>  Hand back a deterministic apply contract
+
+
+  <span class="copper">┌─ status ─────────────────────────────────────────────┐</span>
+  <span class="copper">│</span>  detecting framework  <span class="green">✓ Vite React app</span>             <span class="copper">│</span>
+  <span class="copper">│</span>  patching head        <span class="green">✓ index.html</span>                 <span class="copper">│</span>
+  <span class="copper">│</span>  verification         <span class="dim">· run app/build next</span>         <span class="copper">│</span>
+  <span class="copper">│</span>  reviewer link        <span class="gold">↗ jetti.co/#/r/rev_design</span>    <span class="copper">│</span>
+  <span class="copper">└──────────────────────────────────────────────────────┘</span>
+
+
+  <span class="copper">jetti</span><span class="dim">&gt;</span> <span class="white">ready when you are</span><span class="caret"></span>
+</pre>
+    </div>
+
+    <div class="term-caption">real output. your agent runs this. you don't have to.</div>
+  </div>
+</section>
+
+<!-- ── reviewer flow ─────────────────────────────────── -->
+<section id="flow">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="left">
+        <div class="kicker">─── what your reviewer sees ───</div>
+        <h2>They edit. <em>You apply.</em></h2>
+        <p>Same site, two perspectives. Your reviewer changes what they mean. You receive a structured handoff — not a screenshot, not a Loom, not a Slack thread.</p>
+      </div>
+      <div class="right">↪ structured, not screenshots</div>
+    </div>
+
+    <div class="flow-grid">
+      <!-- frame A -->
+      <div class="frame">
+        <div class="frame-head">
+          <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+          <span class="url"><span class="lock">🔒</span> rollingfeasts.com/about <span class="live">· LIVE</span></span>
+        </div>
+        <div class="frame-cap">
+          <span class="icon">A</span>
+          <span class="who">Reviewer · <b>Jamie</b></span>
+          <span class="what">click anything →</span>
+        </div>
+        <div class="frame-body review-site">
+          <h4>Born from a <span class="edited">food truck</span> on Hawthorne.</h4>
+          <p class="body-line">We started with one truck, two recipes, and a habit of arguing about salt. Today we cater across Portland — same recipes, slightly less salt.</p>
+          <div class="photo-block">
+            <span class="cam">📷</span>
+          </div>
+          <div class="comment-bubble">
+            <span class="by">Jamie · note</span>
+            move the menu link higher up — clients always miss it!
+          </div>
+        </div>
+      </div>
+
+      <!-- frame B -->
+      <div class="frame">
+        <div class="frame-head">
+          <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+          <span class="url"><span style="color:var(--copper)">⌘</span> ~/rolling-feasts $ jetti review <span class="live">· INBOX</span></span>
+        </div>
+        <div class="frame-cap" style="background:#dcfce7">
+          <span class="icon" style="background:var(--moss)">B</span>
+          <span class="who">Developer · <b>You</b></span>
+          <span class="what" style="color:var(--moss)">↩ ready to apply</span>
+        </div>
+        <div class="frame-body monitor">
+          <div class="row">
+            <span class="tag text">Aa</span>
+            <div class="body">"food cart" → <b>"food truck"</b><span class="selector">about/hero h1 → span:nth-child(2)</span></div>
+            <span class="by">Jamie · 2m</span>
+          </div>
+          <div class="row">
+            <span class="tag img">✦</span>
+            <div class="body">Replace hero photo · <b>truck-final.jpg</b> (2.4mb)<span class="selector">about/hero figure → img.cover</span></div>
+            <span class="by">Jamie · 1m</span>
+          </div>
+          <div class="row">
+            <span class="tag cmt">¶</span>
+            <div class="body">"move the menu link higher up — clients always miss it!"<span class="selector">about/header → comment</span></div>
+            <span class="by">Jamie · just now</span>
+          </div>
+          <div class="applybar">
+            <span class="copper">$</span>
+            <span>npx jetti apply <span style="color:#67e8f9">rev_design</span></span>
+            <span class="green">→ branch + draft PR</span>
+            <button class="btn">Run</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-foot">Reviewers stay <b>free on every plan</b>. Always. <a href="#pricing">See pricing →</a></div>
+  </div>
+</section>
+
+<!-- ── framework matrix ─────────────────────────────── -->
+<section id="frameworks">
+  <div class="wrap">
+    <div class="section-head" style="justify-content:center; text-align:center; flex-direction:column; align-items:center">
+      <div class="kicker">─── what we support today ───</div>
+      <h2 style="text-align:center">Built for the stacks <em>your agent already knows</em>.</h2>
+      <p style="text-align:center; max-width:560px">Auto-detection where we've shipped it. Honest "coming soon" where we haven't. No false checkmarks.</p>
+    </div>
+
+    <div class="matrix-card">
+      <div class="matrix-row">
+        <div class="ico vite">⚡</div>
+        <div class="name">Vite + React<small>auto-detected · patched at <code style="font-family:var(--mono);font-size:11.5px">index.html</code></small></div>
+        <div class="detect">vite.config · package.json</div>
+        <div class="status ok">supported</div>
+      </div>
+      <div class="matrix-row">
+        <div class="ico html">⌘</div>
+        <div class="name">Plain HTML / static<small>auto-detected · patched at <code style="font-family:var(--mono);font-size:11.5px">&lt;head&gt;</code></small></div>
+        <div class="detect">index.html · no bundler</div>
+        <div class="status ok">supported</div>
+      </div>
+      <div class="matrix-row">
+        <div class="ico next">N</div>
+        <div class="name">Next.js<small>app router · server components</small></div>
+        <div class="detect">app/layout.tsx</div>
+        <div class="status soon">coming</div>
+      </div>
+      <div class="matrix-row">
+        <div class="ico next2">N</div>
+        <div class="name">Next.js<small>pages router · legacy</small></div>
+        <div class="detect">_document.tsx</div>
+        <div class="status soon">coming</div>
+      </div>
+      <div class="matrix-row">
+        <div class="ico web">⊞</div>
+        <div class="name">Webflow · Shopify · GTM<small>script-tag installs · no codebase access</small></div>
+        <div class="detect">embed snippet</div>
+        <div class="status soon">coming</div>
+      </div>
+    </div>
+    <div class="matrix-honest">honesty signal &gt; false checkmarks</div>
+  </div>
+</section>
+
+<!-- ── for the vibe coder ────────────────────────────── -->
+<section id="vibe">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="left">
+        <div class="kicker">─── for the vibe coder ───</div>
+        <h2>You ship the <em>vibes</em>. We ship the <em>handoff</em>.</h2>
+        <p>If you're shipping sites with Claude Code at 2am and you'd rather not Slack-translate your client's screenshots into commits — jetti is for you.</p>
+      </div>
+      <div class="right">no git PhD required ↗</div>
+    </div>
+
+    <div class="pitch-grid">
+      <div class="pitch p1">
+        <div class="step"><span class="num">A</span> agent first</div>
+        <div class="ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="M4.9 4.9l2.1 2.1"/><path d="M17 17l2.1 2.1"/><path d="M2 12h3"/><path d="M19 12h3"/></svg>
+        </div>
+        <h3>Claude Code, Codex, Cursor.</h3>
+        <p>Your agent runs the install. Your agent applies the patch. You stay in your editor — no new dashboard, no second login, no context switch.</p>
+        <div class="demo">▸ install jetti</div>
+      </div>
+      <div class="pitch p2">
+        <div class="step"><span class="num">B</span> branch + PR</div>
+        <div class="ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 9v6a3 3 0 0 0 3 3h3"/></svg>
+        </div>
+        <h3>Never touches main.</h3>
+        <p>Apply runs on a fresh branch and opens a draft PR. Diff looks weird? Close it. Looks right? Merge it. Brake-tap UX for people who didn't really learn git.</p>
+        <div class="demo" style="background:#fff; color:var(--ink)">draft PR · #142</div>
+      </div>
+      <div class="pitch p3">
+        <div class="step"><span class="num">C</span> deterministic</div>
+        <div class="ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18 22 12 16 6"/><path d="M8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>Patches, not prompts.</h3>
+        <p>Text edits land as exact string swaps with selectors. Photos save to <code>public/</code>. Comments stay as comments — your agent reads them, you decide.</p>
+        <div class="demo">4 files changed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── pricing teaser ───────────────────────────────── -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="teaser">
+      <div>
+        <h3>Free for the first review.<br/>Solo $29/mo. <em style="font-style:italic; color:var(--copper-deep)">Reviewers always free.</em></h3>
+        <p>One agent install, one reviewer link, no hidden seat math. Start free, upgrade when you ship enough sites that <b>$29 is rounding error</b>.</p>
+      </div>
+      <div class="cta-col">
+        <a class="price-cta" href="https://jetti.co/pricing">See full pricing <span aria-hidden="true">→</span></a>
+        <span class="reviewers-free">no seat traps · no signup walls</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── footer ────────────────────────────────────────── -->
+<footer class="foot">
+  <div class="foot-grid">
+    <div>
+      <div class="brand-foot">jetti<span class="dot">.</span></div>
+      <div class="tagline">website reviews for agent workflows</div>
+      <p class="blurb">An edit-first review tool for developers who use AI agents. Your stakeholders change the words and photos they mean; you ship a handoff your agent can apply.</p>
+      <div style="font-family:var(--mono); font-size:11px; color:#78716c">v0.4 · skill</div>
+    </div>
+    <div>
+      <h5>Product</h5>
+      <ul>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#flow">How it works</a></li>
+        <li><a href="#frameworks">Frameworks</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="https://github.com/rossres/jetti/releases">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Developers</h5>
+      <ul>
+        <li><a href="https://jetti.co">Docs</a></li>
+        <li><a href="https://jetti.co/install.md">/install.md contract</a></li>
+        <li><a href="https://github.com/rossres/jetti">GitHub</a></li>
+        <li><a href="https://github.com/rossres/jetti#the-two-clis">jetti apply CLI</a></li>
+        <li><a href="https://jetti.co/privacy">Privacy &amp; boundaries</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Company</h5>
+      <ul>
+        <li><a href="https://jetti.co">About</a></li>
+        <li><a href="mailto:hey@jetti.co">Contact</a></li>
+        <li><a href="https://jetti.co/legal">Legal</a></li>
+        <li><a href="https://github.com/rossres/jetti/actions">Status</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="ascii">( o.o )  ·  jetti — made for claude-code · codex · cursor</div>
+    <div>© 2026 Jetti. Cream canvas, no pure white, no pure black.</div>
+  </div>
+  <svg class="foot-mushroom" width="80" height="68" viewBox="0 0 80 68">
+    <ellipse cx="40" cy="62" rx="26" ry="4" fill="#000" opacity=".3"/>
+    <rect x="32" y="32" width="16" height="30" fill="#fef3c7" stroke="#d97757" stroke-width="2.2" rx="3"/>
+    <ellipse cx="40" cy="32" rx="32" ry="18" fill="#ef4444" stroke="#fef3c7" stroke-width="2.2"/>
+    <circle cx="30" cy="26" r="3" fill="#fef3c7"/>
+    <circle cx="48" cy="34" r="2.2" fill="#fef3c7"/>
+    <circle cx="56" cy="26" r="2" fill="#fef3c7"/>
+  </svg>
+</footer>
+
+<script>
+(function(){
+  const btn = document.getElementById('copy-prompt');
+  const lbl = document.getElementById('copy-label');
+  if(btn){
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText('install jetti from https://jetti.co/install.md'); } catch(e){}
+      const orig = lbl.textContent;
+      lbl.textContent = 'Copied! Paste into your agent';
+      btn.style.background = '#15803d';
+      setTimeout(() => { lbl.textContent = orig; btn.style.background = ''; }, 2200);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
