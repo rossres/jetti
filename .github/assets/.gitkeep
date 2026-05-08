@@ -6,4 +6,9 @@
 #   demo-install.gif      — `install jetti` CLI flow, ~5–8s loop
 #   demo-reviewer.gif     — reviewer editing a live site, ~5–8s loop
 #   demo-apply.gif        — `npx jetti apply` running, ~5–8s loop
-#   social-preview.png    — 1280×640 PNG used as the GitHub repo's social card
+#
+# Already landed:
+#   social-preview.png    — 1280×640 brand-kit-aligned card (cream / copper / honey,
+#                           jetti wordmark, install command, MIT · v0.4 · skill footer).
+#                           Temporary; replace when the designer ships a polished version.
+#                           Upload to repo via Settings → Social preview.

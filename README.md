@@ -16,11 +16,10 @@
 
 <p align="center">
   <a href="https://rossres.github.io/jetti/"><img alt="For devs" src="https://img.shields.io/badge/for%20devs-rossres.github.io%2Fjetti-fbbf24"></a>
+  <a href="https://github.com/rossres/jetti/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/rossres/jetti?color=d97757&label=release"></a>
   <a href="https://github.com/rossres/jetti/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/rossres/jetti/actions/workflows/ci.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
-  <a href="https://jetti.co"><img alt="jetti.co" src="https://img.shields.io/badge/web-jetti.co-9a3412"></a>
   <img alt="Made for Claude Code · Codex · Cursor" src="https://img.shields.io/badge/made%20for-Claude%20Code%20%C2%B7%20Codex%20%C2%B7%20Cursor-1c1917">
-  <img alt="Status: pre-1.0" src="https://img.shields.io/badge/status-pre--1.0-fbbf24">
 </p>
 
 <pre align="center">
