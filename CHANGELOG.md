@@ -28,4 +28,12 @@ For changes to the hosted Jetti server (the React app, snippet runtime, owner mo
 
 - README hero used to reference `.github/assets/hero-light.png` and `demo-install.gif` which don't exist yet — replaced with canonical JETTI ASCII banner and `┌─ status ─┐` panel until designer assets ship.
 
+### Changed
+
+- README badge row 6 → 5: dropped redundant `web · jetti.co` and static `Status: pre-1.0` badges; added a live GitHub release badge linked to `/releases/latest` so the v0.4 mark in the hero ASCII is backed by an actual release.
+
+### Added (visual assets)
+
+- `.github/assets/social-preview.png` — temporary 1280×640 brand-kit social card (cream `#FDF9F0`, copper `#D97757` jetti wordmark with sticker shadow, honey `#FBBF24` accent squiggle, mono terminal panel with the install command, MIT · v0.4 · skill footer). Replaces the generic GitHub auto-OG when uploaded via Settings → Social preview. Designer's polished version replaces this later.
+
 [Unreleased]: https://github.com/rossres/jetti/commits/main
