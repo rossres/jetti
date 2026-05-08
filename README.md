@@ -83,7 +83,7 @@ Your agent will:
 
 1. Fetch the install contract at [`jetti.co/install.md`](https://jetti.co/install.md)
 2. POST to [`jetti.co/api/agent-installs`](https://jetti.co/api/agent-installs) to mint a unique session
-3. Detect your framework (Vite/React or plain HTML today; more coming)
+3. Detect your framework — the CLI auto-patches Vite/React and plain HTML; for Next.js, Astro, and other stacks the agent follows the per-stack recipe at `jetti.co/install.md`
 4. Patch your entry file's `<head>` with the snippet
 5. Print a reviewer link
 
@@ -244,17 +244,20 @@ For the deep system overview — endpoints, snippet runtime, capture format, han
 
 ## Framework support
 
-| Framework | Install detection | Notes |
-|---|---|---|
-| Plain HTML / static | ✅ | Patches `index.html` `<head>` |
-| Vite + React | ✅ | Patches `index.html` |
-| Next.js (app + pages router) | 🔜 [#3](https://github.com/rossres/jetti/issues/3) | Manual snippet paste works today |
-| Astro | 🔜 [#9](https://github.com/rossres/jetti/issues/9) | Manual snippet paste works today |
-| Webflow / custom code | 🔜 [#4](https://github.com/rossres/jetti/issues/4) | Manual snippet paste works today |
-| Shopify themes | 🔜 [#5](https://github.com/rossres/jetti/issues/5) | Manual snippet paste works today |
-| GTM | 🔜 [#12](https://github.com/rossres/jetti/issues/12) | Manual snippet paste works today |
+The Jetti snippet runs on every framework below. The install path differs depending on whether the CLI knows the stack, an agent has codebase access, or you're pasting into a site builder.
 
-A framework adapter is one of the highest-leverage contributions today — pick up [a tagged issue](https://github.com/rossres/jetti/issues?q=is%3Aopen+is%3Aissue+label%3Aframework-adapter) and see [CONTRIBUTING.md](./CONTRIBUTING.md).
+| Framework | Install path | Notes |
+|---|---|---|
+| Vite + React | ✅ CLI auto-patch | Patches `index.html` |
+| Plain HTML / static | ✅ CLI auto-patch | Patches `index.html` `<head>` |
+| Next.js (app router) | ✅ AI prompt | Recipe at [`jetti.co/install.md`](https://jetti.co/install.md) patches `app/layout.tsx`. CLI auto-detect tracked at [#3](https://github.com/rossres/jetti/issues/3). |
+| Next.js (pages router) | ✅ AI prompt | Recipe at [`jetti.co/install.md`](https://jetti.co/install.md) patches `pages/_document.tsx`. CLI auto-detect tracked at [#3](https://github.com/rossres/jetti/issues/3). |
+| Astro | ✅ AI prompt | Recipe at [`jetti.co/install.md`](https://jetti.co/install.md) patches the root layout `<head>`. CLI auto-detect tracked at [#9](https://github.com/rossres/jetti/issues/9). |
+| Webflow / custom code | ✅ Paste | Site head field — no codebase needed. Helper tracked at [#4](https://github.com/rossres/jetti/issues/4). |
+| Shopify themes | ✅ Paste | Theme `theme.liquid` head — no codebase needed. Helper tracked at [#5](https://github.com/rossres/jetti/issues/5). |
+| GTM | ✅ Paste | Custom HTML tag firing on All Pages. Helper tracked at [#12](https://github.com/rossres/jetti/issues/12). |
+
+CLI auto-detect for the `AI prompt` rows is still one of the highest-leverage contributions — picking up a tagged adapter issue lets the install run without an agent. See [a tagged issue](https://github.com/rossres/jetti/issues?q=is%3Aopen+is%3Aissue+label%3Aframework-adapter) and [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Examples
 
