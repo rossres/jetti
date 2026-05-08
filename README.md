@@ -1,13 +1,13 @@
-<!-- HERO BANNER -->
-<p align="center">
-  <a href="https://rossres.github.io/jetti/">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset=".github/assets/hero-dark.png">
-      <source media="(prefers-color-scheme: light)" srcset=".github/assets/hero-light.png">
-      <img alt="Jetti — website reviews for agent workflows" src=".github/assets/hero-light.png" width="780">
-    </picture>
-  </a>
-</p>
+<!-- HERO BANNER (placeholder until designer assets land in .github/assets/) -->
+<pre align="center">
+╔══════════════════════════════════════════════════════╗
+║       ██╗ ███████╗ ████████╗ ████████╗ ██╗           ║
+║              J  E  T  T  I     v0.4 · skill          ║
+║      website reviews for agent workflows             ║
+║                                /'^^^\  .             ║
+║                               ( o.o ) /              ║
+╚══════════════════════════════════════════════════════╝
+</pre>
 
 <p align="center">
   <strong>Website reviews for agent workflows.</strong><br>
@@ -23,9 +23,16 @@
   <img alt="Status: pre-1.0" src="https://img.shields.io/badge/status-pre--1.0-fbbf24">
 </p>
 
-<p align="center">
-  <img alt="Jetti install flow" src=".github/assets/demo-install.gif" width="720">
-</p>
+<pre align="center">
+you ▸ ~/your-repo $ install jetti
+
+  ┌─ status ─────────────────────────────────────────────┐
+  │  detecting framework ✓ Vite React app                │
+  │  patching head       ✓ index.html                    │
+  │  verification        · run app/build next            │
+  │  reviewer link       ↗ jetti.co/#/r/rev_demo         │
+  └──────────────────────────────────────────────────────┘
+</pre>
 
 ---
 
