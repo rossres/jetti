@@ -1,0 +1,47 @@
+{
+  "name": "@jetti/cli",
+  "version": "0.0.1",
+  "description": "Website reviews for agent workflows. Install Jetti into your project with one prompt to your AI agent.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Ross Resnick",
+    "email": "rossres@icloud.com"
+  },
+  "homepage": "https://rossres.github.io/jetti/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rossres/jetti.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rossres/jetti/issues"
+  },
+  "bin": {
+    "jetti-install": "./scripts/jetti-install.mjs"
+  },
+  "files": [
+    "scripts/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "lint": "node --check scripts/jetti-install.mjs",
+    "test": "echo 'No tests yet — install CLI tests live in the app monorepo' && exit 0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "claude-code",
+    "codex",
+    "cursor",
+    "ai-agents",
+    "website-feedback",
+    "cli",
+    "skill",
+    "developer-tools",
+    "jetti"
+  ]
+}
