@@ -120,7 +120,7 @@ The reviewer doesn't see the mode — they just open the link. Mode selection ha
 Without an account, reviewers can:
 
 - **Edit visible text** — click any rendered string, type the change, press enter
-- **Replace photos** — drag a new file onto any `<img>`
+- **Replace photos** — upload a new file for any `<img>` (drag-drop or click-to-pick)
 - **Leave comments** — pin notes to specific elements
 - **Ask Vibe Assist** for a copy rewrite — three free uses per session
 - **Send the review** to the developer when they're done
